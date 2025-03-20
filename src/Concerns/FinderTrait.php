@@ -1,9 +1,9 @@
 <?php
 
-namespace Zahzah\LaravelFeature\Concerns;
+namespace Hanafalah\LaravelFeature\Concerns;
 
 use Illuminate\Database\Eloquent\Model;
-use Zahzah\LaravelFeature\Exceptions\{
+use Hanafalah\LaravelFeature\Exceptions\{
     FeatureNotFoundException,
     FeatureWithNameNotFoundException,
     FeatureWithUuidNotFoundException
@@ -11,20 +11,21 @@ use Zahzah\LaravelFeature\Exceptions\{
 
 trait FinderTrait
 {
-        /**
+    /**
      * A description of the entire PHP function.
      *
      * @param datatype $paramname description
      * @throws Some_Exception_Class description of exception
      * @return Some_Return_Value
      */
-    public function find($featureId,$exceptions=false): Model|null{
-        $model = $this->__model->where(function($q) use ($featureId){
-            $q->where($this->__model->getKeyName(),$featureId)->orWhere('uuid',$featureId);
+    public function find($featureId, $exceptions = false): Model|null
+    {
+        $model = $this->__model->where(function ($q) use ($featureId) {
+            $q->where($this->__model->getKeyName(), $featureId)->orWhere('uuid', $featureId);
         })->first();
         if (!isset($model) && $exceptions) {
             throw new FeatureNotFoundException($featureId);
-        }else{
+        } else {
             $this->__model = $model ?? $this->__model;
         }
         return $model;
@@ -37,11 +38,12 @@ trait FinderTrait
      * @throws FeatureWithUuidNotFoundException If the model with the given UUID is not found.
      * @return Model The found model.
      */
-    public function findByUuid($uuid,$exceptions=false): Model|null{
-        $model = $this->__model->where('uuid',$uuid)->first();
+    public function findByUuid($uuid, $exceptions = false): Model|null
+    {
+        $model = $this->__model->where('uuid', $uuid)->first();
         if (!isset($model) && $exceptions) {
             throw new FeatureWithUuidNotFoundException($uuid);
-        }else{
+        } else {
             $this->__model = $model ?? $this->__model;
         }
         return $model;
@@ -54,11 +56,12 @@ trait FinderTrait
      * @throws FeatureWithNameNotFoundException If the model with the given name is not found.
      * @return Model The found model.
      */
-    public function findByName($name,$exceptions=false): Model|null{
-        $model = $this->__model->where('name',$name)->first();
+    public function findByName($name, $exceptions = false): Model|null
+    {
+        $model = $this->__model->where('name', $name)->first();
         if (!isset($model) && $exceptions) {
             throw new FeatureWithNameNotFoundException($name);
-        }else{
+        } else {
             $this->__model = $model ?? $this->__model;
         }
         return $model;

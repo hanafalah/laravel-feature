@@ -1,8 +1,9 @@
 <?php
 
-namespace Zahzah\LaravelFeature\Commands;
+namespace Hanafalah\LaravelFeature\Commands;
 
-class InstallMakeCommand extends EnvironmentCommand{
+class InstallMakeCommand extends EnvironmentCommand
+{
     /**
      * The name and signature of the console command.
      *
@@ -23,7 +24,7 @@ class InstallMakeCommand extends EnvironmentCommand{
      */
     public function handle()
     {
-        $provider = 'Zahzah\LaravelFeature\LaravelFeatureServiceProvider';
+        $provider = 'Hanafalah\LaravelFeature\LaravelFeatureServiceProvider';
 
         $this->comment('Installing Feature...');
         $this->callSilent('vendor:publish', [
@@ -44,7 +45,7 @@ class InstallMakeCommand extends EnvironmentCommand{
         ]);
 
         $this->info('✔️  Created LaravelFeatureServiceProvider.php');
-        
+
         $this->callSilent('vendor:publish', [
             '--provider' => $provider,
             '--tag'      => 'migrations'
@@ -57,6 +58,6 @@ class InstallMakeCommand extends EnvironmentCommand{
         ]);
         $this->info('✔️  App table migrated');
 
-        $this->comment('zahzah/laravel-feature installed successfully.');
+        $this->comment('hanafalah/laravel-feature installed successfully.');
     }
 }

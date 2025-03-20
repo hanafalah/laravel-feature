@@ -1,12 +1,13 @@
 <?php
 
-namespace Zahzah\LaravelFeature\Models\Feature;
+namespace Hanafalah\LaravelFeature\Models\Feature;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Zahzah\LaravelSupport\Models\BaseModel;
+use Hanafalah\LaravelSupport\Models\BaseModel;
 
-class ModelHasFeature extends BaseModel{
+class ModelHasFeature extends BaseModel
+{
     use HasUlids, SoftDeletes;
 
     public $incrementing  = false;
@@ -14,12 +15,25 @@ class ModelHasFeature extends BaseModel{
     protected $primaryKey = 'id';
     protected $keyType    = 'string';
     protected $fillable   = [
-        'id','model_type','model_id','master_feature_id','feature_version_id'
+        'id',
+        'model_type',
+        'model_id',
+        'master_feature_id',
+        'feature_version_id'
     ];
 
     //EIGER SECTION
-    public function model(){return $this->morphTo();}
-    public function masterFeature(){return $this->belongsToModel('MasterFeature');}
-    public function modelHasVersion(){return $this->morphOneModel('ModelHasVersion','model');}
+    public function model()
+    {
+        return $this->morphTo();
+    }
+    public function masterFeature()
+    {
+        return $this->belongsToModel('MasterFeature');
+    }
+    public function modelHasVersion()
+    {
+        return $this->morphOneModel('ModelHasVersion', 'model');
+    }
     //END EIGER SECTION
 }

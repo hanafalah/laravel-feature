@@ -1,16 +1,15 @@
 <?php
 
-namespace Zahzah\LaravelFeature\Supports;
+namespace Hanafalah\LaravelFeature\Supports;
 
-use Zahzah\LaravelSupport\Supports\PackageManagement;
-use Zahzah\LaravelFeature\Concerns;
+use Hanafalah\LaravelSupport\Supports\PackageManagement;
+use Hanafalah\LaravelFeature\Concerns;
 
-class BaseLaravelFeature extends PackageManagement{
+class BaseLaravelFeature extends PackageManagement
+{
     use Concerns\HasSetupFeature;
     use Concerns\FinderTrait;
 
     /** @var array */
     protected $__feature_config = [];
-
 }
-

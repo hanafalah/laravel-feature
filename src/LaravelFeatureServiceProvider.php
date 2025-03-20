@@ -1,15 +1,18 @@
 <?php
 
-namespace Zahzah\LaravelFeature;
-use Zahzah\LaravelSupport\Providers\BaseServiceProvider;
+namespace Hanafalah\LaravelFeature;
 
-class LaravelFeatureServiceProvider extends BaseServiceProvider 
+use Hanafalah\LaravelSupport\Providers\BaseServiceProvider;
+
+class LaravelFeatureServiceProvider extends BaseServiceProvider
 {
-    public function register(){
+    public function register()
+    {
         $this->registerMainClass(LaravelFeature::class)
-             ->registerCommandService(Providers\CommandServiceProvider::class)
-             ->registers([
-                '*','Services' => function(){
+            ->registerCommandService(Providers\CommandServiceProvider::class)
+            ->registers([
+                '*',
+                'Services' => function () {
                     $this->binds([
                         Contracts\LaravelFeature::class => new LaravelFeature()
                     ]);
@@ -22,7 +25,8 @@ class LaravelFeatureServiceProvider extends BaseServiceProvider
      *
      * @return string The base path for the package.
      */
-    protected function dir(): string{
-        return __DIR__.'/';
+    protected function dir(): string
+    {
+        return __DIR__ . '/';
     }
 }

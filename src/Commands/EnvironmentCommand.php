@@ -1,22 +1,25 @@
 <?php
 
-namespace Zahzah\LaravelFeature\Commands;
+namespace Hanafalah\LaravelFeature\Commands;
 
-use Zahzah\LaravelSupport\{
+use Hanafalah\LaravelSupport\{
     Commands\BaseCommand
 };
-use Zahzah\LaravelSupport\Concerns\ServiceProvider\HasMigrationConfiguration;
+use Hanafalah\LaravelSupport\Concerns\ServiceProvider\HasMigrationConfiguration;
 
-class EnvironmentCommand extends BaseCommand{
+class EnvironmentCommand extends BaseCommand
+{
     use HasMigrationConfiguration;
 
-    protected function init(): self{
+    protected function init(): self
+    {
         //INITIALIZE SECTION
         $this->setLocalConfig('laravel-feature');
         return $this;
     }
 
-    protected function dir(): string{
-        return __DIR__.'/../';
-    }    
+    protected function dir(): string
+    {
+        return __DIR__ . '/../';
+    }
 }

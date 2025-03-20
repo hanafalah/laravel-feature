@@ -1,10 +1,10 @@
 {
-    "name": "zahzah/laravel-feature",
+    "name": "hanafalah/laravel-feature",
     "description": "Package untuk mengelola fitur di aplikasi",
     "type": "library",
     "autoload": {
         "psr-4": {
-            "Zahzah\\LaravelFeature\\": "src/"
+            "Hanafalah\\LaravelFeature\\": "src/"
         }
     },
     "authors": [
@@ -16,12 +16,12 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Zahzah\\LaravelFeature\\LaravelFeatureServiceProvider"
+                "Hanafalah\\LaravelFeature\\LaravelFeatureServiceProvider"
             ]
         }
     },
     "require": {
-        "zahzah/laravel-support": "1.x"
+        "hanafalah/laravel-support": "1.x"
     },
     "minimum-stability": "dev",
     "prefer-stable": false

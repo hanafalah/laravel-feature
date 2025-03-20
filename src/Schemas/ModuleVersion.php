@@ -1,17 +1,19 @@
 <?php
 
-namespace Zahzah\LaravelFeature\Schemas;
+namespace Hanafalah\LaravelFeature\Schemas;
 
-use Zahzah\LaravelFeature\Supports\BaseLaravelFeature;
+use Hanafalah\LaravelFeature\Supports\BaseLaravelFeature;
 
-class ModuleVersion extends BaseLaravelFeature{
-    public function booting(): self{
+class ModuleVersion extends BaseLaravelFeature
+{
+    public function booting(): self
+    {
         static::$__class = $this;
-        static::$__model = $this->{$this->__entity."Model"}();
+        static::$__model = $this->{$this->__entity . "Model"}();
         return $this;
-}
+    }
 
-protected array $__guard   = ['id','model_type','model_id','name']; 
+    protected array $__guard   = ['id', 'model_type', 'model_id', 'name'];
     protected array $__add     = ['name'];
     protected string $__entity = 'ModelHasVersion';
 
@@ -24,7 +26,8 @@ protected array $__guard   = ['id','model_type','model_id','name'];
      *
      * @return \Illuminate\Database\Eloquent\Model The API access model.
      */
-    public function addOrChange(? array $attributes=[]): self{    
+    public function addOrChange(?array $attributes = []): self
+    {
         $this->updateOrCreate($attributes);
         $this->__feature_version = self::$__model;
         return $this;

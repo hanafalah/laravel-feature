@@ -1,9 +1,9 @@
 <?php
 
-namespace Zahzah\LaravelFeature;
+namespace Hanafalah\LaravelFeature;
 
 use Illuminate\Contracts\Container\Container;
-use Zahzah\LaravelFeature\Supports\BaseLaravelFeature;
+use Hanafalah\LaravelFeature\Supports\BaseLaravelFeature;
 
 class LaravelFeature extends BaseLaravelFeature
 {
@@ -14,7 +14,8 @@ class LaravelFeature extends BaseLaravelFeature
      * @throws Exception description of exception
      * @return void
      */
-    public function __construct(){
-        $this->setConfig('laravel-feature',$this->__feature_config);
-    }    
+    public function __construct()
+    {
+        $this->setConfig('laravel-feature', $this->__feature_config);
+    }
 }

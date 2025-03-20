@@ -1,25 +1,28 @@
 <?php
 
-namespace Zahzah\LaravelFeature\Schemas;
+namespace Hanafalah\LaravelFeature\Schemas;
 
-use Zahzah\LaravelFeature\{
+use Hanafalah\LaravelFeature\{
     Supports\BaseLaravelFeature
 };
-use Zahzah\LaravelSupport\Contracts\DataManagement;
+use Hanafalah\LaravelSupport\Contracts\DataManagement;
 
-class MasterFeature extends BaseLaravelFeature implements DataManagement{
-    public function booting(): self{
+class MasterFeature extends BaseLaravelFeature implements DataManagement
+{
+    public function booting(): self
+    {
         static::$__class = $this;
-        static::$__model = $this->{$this->__entity."Model"}();
+        static::$__model = $this->{$this->__entity . "Model"}();
         return $this;
-}
+    }
 
-protected array $__guard   = ['id', 'parent_id', 'name']; 
+    protected array $__guard   = ['id', 'parent_id', 'name'];
     protected array $__add     = ['name'];
     protected string $__entity = 'MasterFeature';
     protected $__feature;
 
-    protected function booting(): void{
+    protected function booting(): void
+    {
         parent::booting();
         $this->__feature = self::$__model;
     }
@@ -33,8 +36,9 @@ protected array $__guard   = ['id', 'parent_id', 'name'];
      *
      * @return \Illuminate\Database\Eloquent\Model The API access model.
      */
-    public function addOrChange(? array $attributes=[]): self{    
-        $this->updateOrCreate($attributes);            
+    public function addOrChange(?array $attributes = []): self
+    {
+        $this->updateOrCreate($attributes);
         $this->__feature = self::$__model;
         $condition = $this->isRecentlyCreated() || isset($attributes['addFeatureVersion']);
         if ($condition) $this->addFeatureVersion($attributes['addFeatureVersion'] ?? config('module-version.application.version_pattern'));
@@ -48,9 +52,10 @@ protected array $__guard   = ['id', 'parent_id', 'name'];
      *
      * @return self The current instance.
      */
-    public function addFeatureVersion($version): self{
+    public function addFeatureVersion($version): self
+    {
         $model = self::$__model;
-        $this->childSchema(ModuleVersion::class,function($class) use ($version, $model){
+        $this->childSchema(ModuleVersion::class, function ($class) use ($version, $model) {
             $class->add([
                 'model_id'   => $model->getKey(),
                 'model_type' => $model->getMorphClass(),
@@ -60,7 +65,8 @@ protected array $__guard   = ['id', 'parent_id', 'name'];
         return $this;
     }
 
-    public function remove($featureId = null): self{
+    public function remove($featureId = null): self
+    {
         $featureId ??= $this->__feature->getKey();
         if (isset($featureId)) $this->MasterFeatureModel()->delete($featureId);
         return $this;
@@ -73,7 +79,8 @@ protected array $__guard   = ['id', 'parent_id', 'name'];
      * @param mixed|null $conditionls The conditions to filter the features. Default is null.
      * @return \Illuminate\Database\Eloquent\Collection The collection of features.
      */
-    public function getFeatureList($conditionls=null): \Illuminate\Database\Eloquent\Collection{
+    public function getFeatureList($conditionls = null): \Illuminate\Database\Eloquent\Collection
+    {
         return $this->MasterFeatureModel()->conditionals($conditionls)->get();
     }
     //END GETTER SECTION

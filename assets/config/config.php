@@ -1,7 +1,7 @@
-<?php 
+<?php
 
-use Zahzah\LaravelFeature\Models as FeatureModels;
-use Zahzah\LaravelFeature\Commands as FeatureCommands;
+use Hanafalah\LaravelFeature\Models as FeatureModels;
+use Hanafalah\LaravelFeature\Commands as FeatureCommands;
 
 return [
     'commands' => [

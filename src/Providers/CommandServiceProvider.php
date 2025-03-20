@@ -1,9 +1,9 @@
 <?php
 
-namespace Zahzah\LaravelFeature\Providers;
+namespace Hanafalah\LaravelFeature\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Zahzah\LaravelFeature\Commands;
+use Hanafalah\LaravelFeature\Commands;
 
 class CommandServiceProvider extends ServiceProvider
 {
@@ -12,11 +12,13 @@ class CommandServiceProvider extends ServiceProvider
         Commands\InstallMakeCommand::class
     ];
 
-    public function register(){
-        $this->commands(config('laravel-feature.commands',$this->__commands));
+    public function register()
+    {
+        $this->commands(config('laravel-feature.commands', $this->__commands));
     }
 
-    public function provides(){
+    public function provides()
+    {
         return $this->__commands;
     }
 }
