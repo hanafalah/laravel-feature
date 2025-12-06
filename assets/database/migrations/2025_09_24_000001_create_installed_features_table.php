@@ -1,11 +1,11 @@
 <?php
 
+use Hanafalah\LaravelFeature\Models\InstalledFeature;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Hanafalah\LaravelFeature\Models\Feature\MasterFeature;
-use Hanafalah\LaravelFeature\Models\Feature\ModelHasFeature;
-use Hanafalah\ModuleVersion\Models\Version\ModelHasVersion;
+use Hanafalah\LaravelFeature\Models\MasterFeature as ModelsMasterFeature;
+use Hanafalah\LaravelFeature\Models\Version;
 
 return new class extends Migration
 {
@@ -15,7 +15,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->__table = app(config('database.models.ModelHasFeature', ModelHasFeature::class));
+        $this->__table = app(config('database.models.InstalledFeature', InstalledFeature::class));
     }
 
     /**
@@ -28,21 +28,24 @@ return new class extends Migration
         $table_name = $this->__table->getTable();
         if (!$this->isTableExists()) {
             Schema::create($table_name, function (Blueprint $table) {
-                $masterFeature  = app(config('database.models.MasterFeature', MasterFeature::class));
-                $modelHasVersion = app(config('database.models.ModelHasVersion', ModelHasVersion::class));
+                $version  = app(config('database.models.Version', Version::class));
 
                 $table->ulid('id')->primary();
+                $table->string('name', 255)->nullable(false);
                 $table->string('model_type', 50)->nullable(false);
                 $table->string('model_id', 36)->nullable(false);
-                $table->foreignIdFor($masterFeature::class)->nullable(false)
+                $table->string('master_feature_type', 50)->nullable(false);
+                $table->string('master_feature_id', 36)->nullable(false);
+                $table->foreignIdFor($version::class)->nullable(null)
                     ->index()->constrained()->restrictOnDelete()->cascadeOnUpdate();
-                $table->foreignIdFor($modelHasVersion::class)->nullable(false)
-                    ->index()->constrained()->restrictOnDelete()->cascadeOnUpdate();
+                $table->unsignedTinyInteger('current')->default(1)->nullable(false);
+                $table->unsignedTinyInteger('batch')->nullable();
+                $table->json('props')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
 
                 $table->index(['model_type', 'model_id'], 'feature_model');
-                $table->index([$masterFeature->getForeignKey(), $modelHasVersion->getForeignKey()], 'feature_master');
+                $table->index(['master_feature_type', 'master_feature_id'], 'feature_master_feature');
             });
         }
 

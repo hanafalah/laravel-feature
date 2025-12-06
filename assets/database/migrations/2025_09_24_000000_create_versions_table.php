@@ -3,7 +3,10 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Hanafalah\LaravelFeature\Models\Feature\MasterFeature;
+use Hanafalah\LaravelFeature\Models\{
+    MasterFeature,
+    Version
+};
 
 return new class extends Migration
 {
@@ -13,7 +16,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->__table = app(config('database.models.MasterFeature', MasterFeature::class));
+        $this->__table = app(config('database.models.Version', Version::class));
     }
 
     /**
@@ -26,20 +29,17 @@ return new class extends Migration
         $table_name = $this->__table->getTable();
         if (!$this->isTableExists()) {
             Schema::create($table_name, function (Blueprint $table) {
-                $table->id();
-                $table->string('uuid', 255)->unique()->nullable(false);
+                $master_feature_model = app(config('database.models.MasterFeature', MasterFeature::class));
+
+                $table->ulid('id')->primary();
                 $table->string('name', 255)->nullable(false);
+                $table->string('version', 50)->nullable(false);
+                $table->foreignIdFor($master_feature_model::class)->nullable(false)
+                      ->index()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+                $table->unsignedBigInteger('price')->nullable(true);
                 $table->json('props')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
-            });
-        }
-
-        if (!Schema::hasColumn($table_name, 'parent_id')) {
-            Schema::table($table_name, function (Blueprint $table) use ($table_name) {
-                $table->foreignIdFor($this->__table::class, 'parent_id')
-                    ->after('id')->nullable()->index()->constrained($table_name)
-                    ->cascadeOnUpdate()->restrictOnDelete();
             });
         }
     }
